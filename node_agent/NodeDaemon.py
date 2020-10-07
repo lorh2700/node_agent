@@ -61,7 +61,7 @@ def start_daemon():
     send_data()
 
 def get_gpu_list():
-    output = subprocess.check_output("nvidia-smi --query-gpu=pci.bus_id,name,memory.total,uuid --format=csv", shell=True).decode().split("\n")
+    output = subprocess.check_output("nvidia-smi --query-gpu=pci.bus_id,name,memory.total --format=csv", shell=True).decode().split("\n")
     if len(output) > 0:
         del output[0]
     gpu_list = []
@@ -75,7 +75,6 @@ def get_gpu_list():
             tmpMem = tmpList[2].replace(" ","")
             memMib = tmpMem[:tmpMem.index("M")]
             tmpResult["gpu_mem"] = str(float(memMib) * 0.001) + " GB"
-            tmpResult["gpu_uuid"] = tmpList[4]
             gpu_list.append(tmpResult)
 
     return gpu_list

@@ -37,27 +37,14 @@ def getGpuStatus(_ip_address):
                 tmpResult["ip_address"] = _ip_address
                 result.append(tmpResult)
     except Exception as e:
-
         return None
 
     return result
 
-def get_error_body(_ip_address) :
-    errorOutput = {}
-    try:
-        errorOutput["ip_address"] = _ip_address
-        errorOutput = subprocess.check_output(
-            "nvidia-smi -L", shell=True).decode().split(
-            "\n")
-        errorOutput["gpu_uuid"] =
-    except Exception as e:
-        return errorOutput
 
 def get_hdd_info() :
     output = subprocess.check_output("df -h / | tail -n 1", shell=True).decode()
     idxOfpercent = output.index("%")
     result = output[idxOfpercent-2:idxOfpercent]
     result.replace(" ", "")
-    if result == '00':
-        return int(100)
     return int(result)
